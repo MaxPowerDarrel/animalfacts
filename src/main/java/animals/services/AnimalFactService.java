@@ -6,8 +6,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.function.Supplier;
 
-public abstract class AnimalFactService implements AnimalFact {
+public abstract class AnimalFactService implements Supplier<String> {
 
     private final String url;
 
@@ -16,7 +17,7 @@ public abstract class AnimalFactService implements AnimalFact {
     }
 
     @Override
-    public String getFact() {
+    public String get() {
         try {
             URL urlObject = new URL(url);
             HttpURLConnection connection = (HttpsURLConnection)urlObject.openConnection();

@@ -1,7 +1,5 @@
 package animals.ui;
 
-import animals.services.AnimalFact;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -9,13 +7,14 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.util.function.Supplier;
 
 public class UI extends JFrame {
     private final JTextField textField = new JTextField();
     private final JButton catFactButton = new JButton("Cat Fact");
     private final JButton dogFactButton = new JButton("Dog Fact");
 
-    public UI(AnimalFact dogFact, AnimalFact catFact) {
+    public UI(Supplier<String> dogFact, Supplier<String> catFact) {
         super("Animal Facts");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initializeComponents(dogFact, catFact);
@@ -24,7 +23,7 @@ public class UI extends JFrame {
         setVisible(true);
     }
 
-    private void initializeComponents(AnimalFact dogFact, AnimalFact catFact) {
+    private void initializeComponents(Supplier<String> dogFact, Supplier<String> catFact) {
         setLayout(new GridBagLayout());
         GridBagConstraints constraints = new GridBagConstraints();
         final Insets insets = new Insets(10, 10, 0, 10);
@@ -40,14 +39,14 @@ public class UI extends JFrame {
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.insets = insets;
-        dogFactButton.addActionListener(event -> textField.setText(dogFact.getFact()));
+        dogFactButton.addActionListener(event -> textField.setText(dogFact.get()));
         getContentPane().add(dogFactButton, constraints);
 
         constraints.gridwidth = 1;
         constraints.gridx = 2;
         constraints.gridy = 1;
         constraints.insets = insets;
-        catFactButton.addActionListener(event -> textField.setText(catFact.getFact()));
+        catFactButton.addActionListener(event -> textField.setText(catFact.get()));
         getContentPane().add(catFactButton, constraints);
     }
 }
